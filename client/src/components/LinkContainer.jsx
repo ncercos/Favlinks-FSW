@@ -1,6 +1,7 @@
 import Table from './Table'
 import Form from './Form'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import { da } from 'date-fns/locale';
 
 function LinkContainer() {
 
@@ -10,13 +11,54 @@ function LinkContainer() {
         const links = [...favLinks]
         links.splice(index, 1)
         setFavLinks(links)
+        deleteLink(index)
       }
     
       const handleSubmit = (favLink) => {
         const links = [...favLinks]
         links.push(favLink)
         setFavLinks(links)
+        addLink(favLink)
       }
+
+      const getLinks = async () => {
+        try {
+            const response = await fetch('/api/links')
+            const data = await response.json()
+            setFavLinks(data)
+            console.log('Adding data:')
+            console.log(data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const addLink = async (favLink) => {
+      try {
+        const response = await fetch('/api/links', {
+          method: 'POST',
+          body: JSON.stringify(favLink),
+          headers: {"Content-type": "application/json"}
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const deleteLink = async (id) => {
+      try {
+        await fetch('/api/links/:id', {
+          method: 'DELETE',
+          body: JSON.stringify(id)
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    useEffect(() => {
+      getLinks()
+    }, [])
 
     return(
         <div>

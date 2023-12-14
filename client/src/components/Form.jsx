@@ -2,7 +2,7 @@ import { useState } from "react"
 
 function Form(props) {
     const [name, setName] = useState("")
-    const [URL, setURL] = useState("")
+    const [url, setURL] = useState("")
 
     const handleNameChange = (event) => {
         setName(event.target.value)
@@ -15,7 +15,7 @@ function Form(props) {
     return(
         <form onSubmit={(event) => {
             event.preventDefault()
-            props.submitLink({name, URL})
+            props.submitLink({name, url})
         }}>
             <label for="linkName">Link Name:</label>
             <input type="text" id="linkName" name="linkName" onChange={handleNameChange}/>
