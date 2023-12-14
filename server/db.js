@@ -16,6 +16,17 @@ const getLinks = (req, res) => {
     })
 }
 
+const insertLink = (req, res) => {
+    const {name, url} = req.body
+    pool.query('INSERT INTO favlinks (name, url) VALUES ($1, $2)', [name, url],
+        (error, result) => {
+            if(error) {
+                throw error
+            }
+            res.status(201).json(`Link added with ID: ${res.row[0].id}`)
+        })
+}
+
 module.exports = {
-    getLinks,
+    getLinks, insertLink,
 }

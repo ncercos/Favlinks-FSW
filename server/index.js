@@ -14,6 +14,8 @@ app.get('/', (req, res) => {
 
 app.get('/api/links', db.getLinks)
 
+app.post('/api/links', db.insertLink)
+
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`)
 })
