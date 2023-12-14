@@ -13,8 +13,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/links', db.getLinks)
-
 app.post('/api/links', db.insertLink)
+app.put('/api/links', db.updateLink)
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`)

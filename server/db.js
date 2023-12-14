@@ -18,6 +18,7 @@ const getLinks = (req, res) => {
 
 const insertLink = (req, res) => {
     const {name, url} = req.body
+
     pool.query('INSERT INTO favlinks (name, url) VALUES ($1, $2)', [name, url],
         (error, result) => {
             if(error) {
@@ -27,6 +28,19 @@ const insertLink = (req, res) => {
         })
 }
 
+const updateLink = (req, res) => {
+    const id = parseInt(req.params.id)
+    const {name, url} = req.body
+
+    pool.query('UPDATE favlinks SET name = $1, url = $2 WHERE id = $3', [name, url, id],
+        (error, result) => {
+            if(error) {
+                throw error
+            }
+            res.status(200).send(`Link modified with ID: ${id}`)
+        })
+}
+
 module.exports = {
-    getLinks, insertLink,
+    getLinks, insertLink, updateLink,
 }
