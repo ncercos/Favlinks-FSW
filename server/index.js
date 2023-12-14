@@ -6,6 +6,7 @@ const app = express()
 const PORT = 3000
 const clientPath = path.resolve(__dirname, '../client/dist')
 
+app.use(express.json())
 app.use(express.static(clientPath))
 
 app.get('/', (req, res) => {
@@ -15,7 +16,7 @@ app.get('/', (req, res) => {
 app.get('/api/links', db.getLinks)
 app.post('/api/links', db.insertLink)
 app.put('/api/links/:id', db.updateLink)
-app.put('/api/links/:id', db.deleteLink)
+app.delete('/api/links/:id', db.deleteLink)
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`)

@@ -19,12 +19,11 @@ const getLinks = (req, res) => {
 const insertLink = (req, res) => {
     const {name, url} = req.body
 
-    pool.query('INSERT INTO favlinks (name, url) VALUES ($1, $2)', [name, url],
-        (error, result) => {
+    pool.query('INSERT INTO favlinks (name, url) VALUES ($1, $2)', [name, url], (error, result) => {
             if(error) {
                 throw error
             }
-            res.status(201).json(`Link added with ID: ${res.row[0].id}`)
+            res.status(201).send(`Link added named ${name} that directs to: ${url}`)
         })
 }
 
@@ -32,8 +31,7 @@ const updateLink = (req, res) => {
     const id = parseInt(req.params.id)
     const {name, url} = req.body
 
-    pool.query('UPDATE favlinks SET name = $1, url = $2 WHERE id = $3', [name, url, id],
-        (error, result) => {
+    pool.query('UPDATE favlinks SET name = $1, url = $2 WHERE id = $3', [name, url, id], (error, result) => {
             if(error) {
                 throw error
             }
@@ -44,8 +42,7 @@ const updateLink = (req, res) => {
 const deleteLink = (req, res) => {
     const id = parseInt(req.params.id)
 
-    pool.query('DELETE FROM favlinks where ID = $1', [id],
-        (error, result) => {
+    pool.query('DELETE FROM favlinks where ID = $1', [id], (error, result) => {
             if(error) {
                 throw error
             }
@@ -54,5 +51,8 @@ const deleteLink = (req, res) => {
 }
 
 module.exports = {
-    getLinks, insertLink, updateLink, deleteLink,
+    getLinks, 
+    insertLink, 
+    updateLink, 
+    deleteLink,
 }
