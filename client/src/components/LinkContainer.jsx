@@ -11,7 +11,7 @@ function LinkContainer() {
         const links = [...favLinks]
         links.splice(index, 1)
         setFavLinks(links)
-        deleteLink(index)
+        deleteLink(index + 1)
       }
     
       const handleSubmit = (favLink) => {
@@ -46,10 +46,12 @@ function LinkContainer() {
     };
 
     const deleteLink = async (id) => {
+      console.log(id)
       try {
-        await fetch('/api/links/:id', {
+        await fetch(`/api/links/${id}`, {
           method: 'DELETE',
-          body: JSON.stringify(id)
+          body: JSON.stringify({id}),
+          headers: {"Content-type": "application/json"}
         });
       } catch (error) {
         console.error(error);
