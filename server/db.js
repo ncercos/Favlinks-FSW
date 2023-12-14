@@ -41,6 +41,18 @@ const updateLink = (req, res) => {
         })
 }
 
+const deleteLink = (req, res) => {
+    const id = parseInt(req.params.id)
+
+    pool.query('DELETE FROM favlinks where ID = $1', [id],
+        (error, result) => {
+            if(error) {
+                throw error
+            }
+            res.status(200).send(`User deleted with ID: ${id}`)
+        })
+}
+
 module.exports = {
-    getLinks, insertLink, updateLink,
+    getLinks, insertLink, updateLink, deleteLink,
 }
